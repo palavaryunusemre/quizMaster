@@ -15,7 +15,6 @@ public class GlobalExceptionHandler {
     Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<?> handleValidationExceptions(MethodArgumentNotValidException ex, WebRequest request) {
-
         return new ResponseEntity<>(5000, HttpStatus.BAD_REQUEST);
     }
 

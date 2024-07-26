@@ -9,8 +9,6 @@ import java.util.Optional;
 import java.util.UUID;
 @Repository
 public interface GoogleUserDao extends JpaRepository<GoogleUser, UUID> {
-    @Query("From GoogleUser Where email=:email")
-    Optional<GoogleUser> findByEmail(String email);
 
     Optional<GoogleUser> findByGoogleId(String googleId);
 

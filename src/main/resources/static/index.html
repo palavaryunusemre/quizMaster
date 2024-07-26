@@ -36,7 +36,6 @@
 </head>
 <body>
 <div class="login-container">
-    <img src="/api/placeholder/100/100" alt="Logo" class="logo">
     <h2>Google ile Oturum Açın</h2>
     <div id="g_id_onload"
          data-client_id="379876542474-7lgsdjccp8gvrm85cn7jf4olg682knq3.apps.googleusercontent.com"
@@ -68,7 +67,7 @@
     headers: {
         'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ idToken: idToken, platform: 'web' }) // 'platform' parametresini ekleyin, gerekliyse
+    body: JSON.stringify({ idToken: idToken, platform: 'web' })
 })
 .then(response => {
     if (!response.ok) {

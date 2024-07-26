@@ -15,8 +15,6 @@ import quizMaster.quizMaster.core.entities.User;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name="admin_users")
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-
 public class AdminUser extends User {
     @NotBlank
     @NotNull

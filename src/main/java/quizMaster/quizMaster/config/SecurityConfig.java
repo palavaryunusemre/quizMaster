@@ -28,10 +28,11 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
                 .authorizeRequests(authorizeRequests -> authorizeRequests
-                        .requestMatchers("/oauth/**", "/oauth2/**", "/api/adminUser/logIn","/index.html","/admin.html").permitAll()
-                        .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
-                        .requestMatchers("/api/adminUser/admin/**").hasAuthority("ADMIN")
-                        .anyRequest().authenticated())
+                        //.requestMatchers("/oauth/**", "/oauth2/**", "/api/adminUser/logIn","/index.html","/admin.html").permitAll()
+                        //.requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
+                        //.requestMatchers("/api/adminUser/admin/**").hasAuthority("ADMIN")
+                        .anyRequest().permitAll())
+                        //.authenticated())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.ALWAYS))
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)

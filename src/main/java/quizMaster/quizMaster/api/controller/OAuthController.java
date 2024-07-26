@@ -18,6 +18,8 @@ import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
+import java.io.IOException;
+import java.security.GeneralSecurityException;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -34,19 +36,16 @@ public class OAuthController {
     private String androidClientId;
     @Value("${spring.security.oauth2.client.registration.google.client-id.ios}")
     private String iosClientId;
-
     @PostMapping("/google-signin")
-    public ResponseEntity<?> handleGoogleSignIn(@RequestBody GoogleSignInRequest request) {
-        try {
+    public ResponseEntity<?> handleGoogleSignIn(@RequestBody GoogleSignInRequest request) throws GeneralSecurityException, IOException {
+
             String clientId = getClientId(request.getPlatform());
             if (clientId == null) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Unsupported platform");
             }
-
             GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(new NetHttpTransport(), new JacksonFactory())
                     .setAudience(Collections.singletonList(clientId))
                     .build();
-
             GoogleIdToken idToken = verifier.verify(request.getIdToken());
             if (idToken != null) {
                 GoogleIdToken.Payload payload = idToken.getPayload();
@@ -54,30 +53,23 @@ public class OAuthController {
                 String email = payload.getEmail();
                 String name = (String) payload.get("name");
                 String pictureUrl = (String) payload.get("picture");
-
                 Map<String, Object> attributes = new HashMap<>();
                 attributes.put("sub", userId);
                 attributes.put("email", email);
                 attributes.put("name", name);
                 attributes.put("picture", pictureUrl);
                 attributes.put("platform",request.getPlatform());
-
                 OAuth2User oAuth2User = new DefaultOAuth2User(
                         Collections.singleton(new SimpleGrantedAuthority("ROLE_USER")),
                         attributes,
                         "sub"
                 );
-
                 DataResult<String> result = googleUserService.processOAuthPostLogin(oAuth2User);
                 return ResponseEntity.ok(result);
             } else {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid ID token");
             }
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error processing Google sign-in");
-        }
     }
-
     private String getClientId(String platform) {
         switch (platform) {
             case "web":

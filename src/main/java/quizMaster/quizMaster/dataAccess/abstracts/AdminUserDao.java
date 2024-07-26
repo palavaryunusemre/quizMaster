@@ -9,6 +9,5 @@ import java.util.UUID;
 
 @Repository
 public interface AdminUserDao extends JpaRepository<AdminUser, UUID> {
-    @Query("From AdminUser Where email=:email")
-    AdminUser findByEmail(String email);
+
 }
