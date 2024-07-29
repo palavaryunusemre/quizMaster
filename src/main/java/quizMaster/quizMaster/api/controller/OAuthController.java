@@ -25,7 +25,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/oauth")
+@RequestMapping("/api/oauth")
 @RequiredArgsConstructor
 @CrossOrigin
 public class OAuthController {
@@ -82,10 +82,10 @@ public class OAuthController {
                 return null;
         }
     }
-}
-@Getter
-@Setter
-class GoogleSignInRequest {
-    private String idToken;
-    private String platform;
+    @Getter
+    @Setter
+    private class GoogleSignInRequest {
+        private String idToken;
+        private String platform;
+    }
 }

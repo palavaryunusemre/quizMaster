@@ -10,6 +10,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 import quizMaster.quizMaster.business.abstracts.GoogleUserService;
+import quizMaster.quizMaster.config.PasswordEncoderConfig;
 import quizMaster.quizMaster.core.enums.Roles;
 import quizMaster.quizMaster.core.utilities.results.DataResult;
 import quizMaster.quizMaster.core.utilities.services.JwtService;
@@ -27,6 +28,7 @@ public class GoogleUserManager implements GoogleUserService {
     private GoogleUserDao googleUserDao;
     @Autowired
     private JwtService jwtService;
+    private PasswordEncoderConfig passwordEncoderConfig;
     @Transactional
     public DataResult<String> processOAuthPostLogin(OAuth2User oAuth2User) {
         String email = oAuth2User.getAttribute("email");
@@ -41,7 +43,7 @@ public class GoogleUserManager implements GoogleUserService {
             newUser.setGoogleId(googleId);
             newUser.setPlatform(oAuth2User.getAttribute("platform"));
             newUser.setRole(Roles.USER);
-            newUser.setPassword(this.passwordEncoder().encode(password));
+            newUser.setPassword(passwordEncoderConfig.passwordEncoder().encode(password));
             return googleUserDao.save(newUser);
         });
 
@@ -53,8 +55,5 @@ public class GoogleUserManager implements GoogleUserService {
 
         String token = jwtService.generateToken(userResponseDto);
         return new DataResult<>(token, true, 200);
-    }
-    private PasswordEncoder passwordEncoder(){
-        return new BCryptPasswordEncoder();
     }
 }

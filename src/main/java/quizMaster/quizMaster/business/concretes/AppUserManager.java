@@ -1,52 +1,37 @@
 package quizMaster.quizMaster.business.concretes;
 
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
-import quizMaster.quizMaster.business.abstracts.AdminUserService;
+import quizMaster.quizMaster.business.abstracts.AppUserService;
 import quizMaster.quizMaster.config.PasswordEncoderConfig;
 import quizMaster.quizMaster.core.dataAccess.UserDao;
 import quizMaster.quizMaster.core.enums.Roles;
 import quizMaster.quizMaster.core.utilities.results.DataResult;
 import quizMaster.quizMaster.core.utilities.results.Result;
 import quizMaster.quizMaster.core.utilities.services.JwtService;
-import quizMaster.quizMaster.dataAccess.abstracts.AdminUserDao;
-import quizMaster.quizMaster.entities.concretes.AdminUser;
+import quizMaster.quizMaster.dataAccess.abstracts.AppUserDao;
+import quizMaster.quizMaster.entities.concretes.AppUser;
 import quizMaster.quizMaster.entities.dtos.UserResponseDto;
-
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class AdminUserManager implements AdminUserService {
-
-    @Autowired
-    private AdminUserDao adminUserDao;
-    @Autowired
-    private UserDao userDao;
-    @Autowired
-    private JwtService jwtService;
-    private PasswordEncoderConfig passwordEncoderConfig;
+public class AppUserManager implements AppUserService {
+    private final AppUserDao appUserDao;
+    private final JwtService jwtService;
+    private final UserDao userDao;
+    private final PasswordEncoderConfig passwordEncoderConfig;
     @Override
-    public Result createAdmin(@Valid @RequestBody AdminUser user) {
-            user.setPassword(passwordEncoderConfig.passwordEncoder().encode(user.getPassword()));
-            user.setRole(Roles.ADMIN);
-            this.adminUserDao.save(user);
-            return new Result(true,200);
-    }
-
-
-    @Override
-    public DataResult<AdminUser> findByEmail(String email) {
-        return null;
+    public Result createUser(AppUser user) {
+        user.setPassword(passwordEncoderConfig.passwordEncoder().encode(user.getPassword()));
+        user.setRole(Roles.USER);
+        appUserDao.save(user);
+        return new Result(true,200);
     }
 
     @Override
-    public DataResult<String> logInAdmin(String email, String password) {
+    public DataResult<String> logInUser(String email, String password) {
         return userDao.findByEmail(email)
-                .filter(user -> user.getRole() == Roles.ADMIN)
+                .filter(user -> user.getRole() == Roles.USER)
                 .filter(user -> passwordEncoderConfig.passwordEncoder().matches(password, user.getPassword()))
                 .map(user -> {
                     UserResponseDto userDto = new UserResponseDto();
@@ -58,7 +43,6 @@ public class AdminUserManager implements AdminUserService {
                     return new DataResult<>(token, true, 200);
                 })
                 .orElse(new DataResult<>(null, false, 5000));
-
     }
 
 }
