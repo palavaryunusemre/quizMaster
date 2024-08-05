@@ -1,6 +1,5 @@
 package quizMaster.quizMaster.entities.concretes;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
@@ -10,25 +9,20 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import quizMaster.quizMaster.core.entities.User;
-
-import java.time.LocalDate;
-
 @Entity
 @Data
+@Table(name = "facebook_users")
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "app_users")
-public class AppUser extends User {
+public class FacebookUser extends User {
     @NotNull
     @NotBlank
-    @Column(name = "username")
-    private String username;
+    @Column(name="username")
+    private String name;
+    @Column(name = "picture_url")
+    private String pictureUrl;
     @NotNull
-    @NotBlank
-    @Column(name = "nickname")
-    private String nickname;
-    @JsonFormat(pattern = "dd-MM-yyyy")
     @NotNull
-    @Column(name = "birthday")
-    private LocalDate birthday;
+    @Column(name = "facebook_id")
+    private String facebookId;
 }
