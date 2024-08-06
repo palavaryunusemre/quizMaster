@@ -1,4 +1,5 @@
-# Quiz Master
+![Logo](logo.png)
+#
 
 Bu projede android ios ve web ortamlarında geliştirilecek olan uygulamaların backend yapısıdır.
 
