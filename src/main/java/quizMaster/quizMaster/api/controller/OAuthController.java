@@ -27,6 +27,7 @@ import quizMaster.quizMaster.entities.dtos.AppleSignInRequestDto;
 import quizMaster.quizMaster.entities.dtos.FacebookSignInRequestDto;
 import quizMaster.quizMaster.entities.dtos.GoogleSignInRequestDto;
 
+import javax.swing.plaf.synth.Region;
 import java.io.IOException;
 import java.net.URL;
 import java.security.GeneralSecurityException;
@@ -53,8 +54,8 @@ public class OAuthController {
     private String iosClientId;
     @Value("${spring.security.oauth2.client.registration.facebook.client-id}")
     private String facebookClientId;
-    @Value("${spring.security.oauth2.client.registration.apple.client-id}")
-    private String appleClientId;
+    //@Value("${spring.security.oauth2.client.registration.apple.client-id}")
+    //private String appleClientId;
     @PostMapping("/google-signin")
     public ResponseEntity<?> handleGoogleSignIn(@RequestBody GoogleSignInRequestDto request) throws GeneralSecurityException, IOException {
 
@@ -109,6 +110,7 @@ public class OAuthController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid access token");
         }
     }
+    /*
     @PostMapping("/apple-signin")
     public ResponseEntity<?> handleAppleSignIn(@RequestBody AppleSignInRequestDto request) throws ParseException, IOException, JOSEException {
 
@@ -140,7 +142,7 @@ public class OAuthController {
             );
             DataResult<String> result = appleUserService.processOAuthPostLogin(oAuth2User);
             return ResponseEntity.ok(result);
-    }
+    }*/
     private Map<String, Object> extractFacebookUserAttributes(Map<String, Object> userData) {
         Map<String, Object> attributes = new HashMap<>();
         attributes.put("sub", userData.get("id"));
@@ -165,6 +167,7 @@ public class OAuthController {
                 return null;
         }
     }
+    /*
     private boolean verifyToken(SignedJWT signedJWT) throws JOSEException, IOException, ParseException {
         JWKSet publicKeys = JWKSet.load(new URL("https://appleid.apple.com/auth/keys"));
         String kid = signedJWT.getHeader().getKeyID();
@@ -174,5 +177,5 @@ public class OAuthController {
         }
         RSASSAVerifier verifier = new RSASSAVerifier(matchingKey.toRSAKey());
         return signedJWT.verify(verifier);
-    }
+    }*/
 }
