@@ -31,12 +31,18 @@ public class ChatGPTService {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.setBearerAuth(apiKey);
+        String question = "Aşağıdaki soruyu incele ve üç ayrı soru için cevap ver:\n" +
+                "\n" +
+                "1- Bu bir bilgi sorusu mu? Cevap \"true\" ya da \"false\" olmalıdır.\n" +
+                "2- Verilen doğru cevap doğru mu? Cevap \"true\" ya da \"false\" olmalıdır.\n" +
+                "3- Doğru cevap nedir? Cevap, sadece doğru şıkkı içermelidir. Örneğin, doğru cevap \"A) Erciyes\" ise çıktı sadece \"A\" olmalıdır. \n" +
+                "Örnek cevap formatı 'True, True, A' şekilinde olmalıdır. \n";
 
         Map<String, Object> body = new HashMap<>();
         body.put("model", "gpt-3.5-turbo");
         body.put("messages", List.of(
                 Map.of("role", "system", "content", "You are a helpful assistant."),
-                Map.of("role", "user", "content", userInput)
+                Map.of("role", "user", "content", question+userInput)
         ));
 
         HttpEntity<Map<String, Object>> entity = new HttpEntity<>(body, headers);

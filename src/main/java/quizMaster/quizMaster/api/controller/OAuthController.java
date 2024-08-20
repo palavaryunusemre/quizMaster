@@ -44,7 +44,7 @@ import java.util.Map;
 public class OAuthController {
     private final GoogleUserService googleUserService;
     private final FacebookUserService facebookUserService;
-    private final AppleUserService appleUserService;
+    //private final AppleUserService appleUserService;
     private static final RestTemplate restTemplate = new RestTemplate();
     @Value("${spring.security.oauth2.client.registration.google.client-id.web}")
     private String webClientId;
@@ -142,7 +142,17 @@ public class OAuthController {
             );
             DataResult<String> result = appleUserService.processOAuthPostLogin(oAuth2User);
             return ResponseEntity.ok(result);
-    }*/
+    }
+    private boolean verifyToken(SignedJWT signedJWT) throws JOSEException, IOException, ParseException {
+        JWKSet publicKeys = JWKSet.load(new URL("https://appleid.apple.com/auth/keys"));
+        String kid = signedJWT.getHeader().getKeyID();
+        JWK matchingKey = publicKeys.getKeyByKeyId(kid);
+        if (matchingKey == null) {
+            return false;
+        }
+        RSASSAVerifier verifier = new RSASSAVerifier(matchingKey.toRSAKey());
+        return signedJWT.verify(verifier);
+    */
     private Map<String, Object> extractFacebookUserAttributes(Map<String, Object> userData) {
         Map<String, Object> attributes = new HashMap<>();
         attributes.put("sub", userData.get("id"));
@@ -167,15 +177,4 @@ public class OAuthController {
                 return null;
         }
     }
-    /*
-    private boolean verifyToken(SignedJWT signedJWT) throws JOSEException, IOException, ParseException {
-        JWKSet publicKeys = JWKSet.load(new URL("https://appleid.apple.com/auth/keys"));
-        String kid = signedJWT.getHeader().getKeyID();
-        JWK matchingKey = publicKeys.getKeyByKeyId(kid);
-        if (matchingKey == null) {
-            return false;
-        }
-        RSASSAVerifier verifier = new RSASSAVerifier(matchingKey.toRSAKey());
-        return signedJWT.verify(verifier);
-    }*/
 }
