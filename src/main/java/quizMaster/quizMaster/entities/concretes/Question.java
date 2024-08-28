@@ -17,6 +17,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "questions")
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Question {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,6 +27,7 @@ public class Question {
     @NotNull
     @NotBlank
     @Column(name = "category")
+    @Enumerated(EnumType.STRING)
     private Categories category;
 
     @NotNull
@@ -36,12 +38,33 @@ public class Question {
     @NotNull
     @NotBlank
     @Column(name = "answer")
+    @Enumerated(EnumType.STRING)
     private Options answer;
 
     @NotNull
     @NotBlank
-    @Column(name = "options")
-    private String options;
+    @Column(name = "options_a")
+    private String optionsA;
+
+    @NotNull
+    @NotBlank
+    @Column(name = "options_b")
+    private String optionsB;
+
+    @NotNull
+    @NotBlank
+    @Column(name = "options_c")
+    private String optionsC;
+
+    @NotNull
+    @NotBlank
+    @Column(name = "options_d")
+    private String optionsD;
+
+    @NotNull
+    @NotBlank
+    @Column(name = "room_id")
+    private String roomId;
 
     @CreationTimestamp
     @Column(name = "updated_at")

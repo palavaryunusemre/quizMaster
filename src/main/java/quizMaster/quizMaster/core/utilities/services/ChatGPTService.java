@@ -42,7 +42,7 @@ public class ChatGPTService {
         body.put("model", "gpt-3.5-turbo");
         body.put("messages", List.of(
                 Map.of("role", "system", "content", "You are a helpful assistant."),
-                Map.of("role", "user", "content", question+userInput)
+                Map.of("role", "user", "content", userInput)
         ));
 
         HttpEntity<Map<String, Object>> entity = new HttpEntity<>(body, headers);

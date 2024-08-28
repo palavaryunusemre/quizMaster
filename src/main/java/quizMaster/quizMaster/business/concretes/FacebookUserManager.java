@@ -10,7 +10,7 @@ import quizMaster.quizMaster.core.utilities.results.DataResult;
 import quizMaster.quizMaster.core.utilities.services.JwtService;
 import quizMaster.quizMaster.dataAccess.abstracts.FacebookUserDao;
 import quizMaster.quizMaster.entities.concretes.FacebookUser;
-import quizMaster.quizMaster.entities.dtos.UserResponseDto;
+import quizMaster.quizMaster.entities.dtos.Response.UserResponseDto;
 
 import java.util.Optional;
 import java.util.UUID;

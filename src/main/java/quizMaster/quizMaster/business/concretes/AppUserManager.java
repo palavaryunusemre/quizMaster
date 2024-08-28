@@ -11,7 +11,8 @@ import quizMaster.quizMaster.core.utilities.results.Result;
 import quizMaster.quizMaster.core.utilities.services.JwtService;
 import quizMaster.quizMaster.dataAccess.abstracts.AppUserDao;
 import quizMaster.quizMaster.entities.concretes.AppUser;
-import quizMaster.quizMaster.entities.dtos.UserResponseDto;
+import quizMaster.quizMaster.entities.dtos.Request.AppCreateUserRequestDto;
+import quizMaster.quizMaster.entities.dtos.Response.UserResponseDto;
 
 @Service
 @RequiredArgsConstructor
@@ -21,10 +22,16 @@ public class AppUserManager implements AppUserService {
     private final UserDao userDao;
     private final PasswordEncoderConfig passwordEncoderConfig;
     @Override
-    public Result createUser(AppUser user) {
+    public Result createUser(AppCreateUserRequestDto user) {
         user.setPassword(passwordEncoderConfig.passwordEncoder().encode(user.getPassword()));
-        user.setRole(Roles.USER);
-        appUserDao.save(user);
+        AppUser createUser = new AppUser();
+        createUser.setEmail(user.getEmail());
+        createUser.setPassword(user.getPassword());
+        createUser.setBirthday(user.getBirthday());
+        createUser.setNickname(user.getNickName());
+        createUser.setUsername(user.getUserName());
+        createUser.setRole(Roles.USER);
+        appUserDao.save(createUser);
         return new Result(true,200);
     }
 

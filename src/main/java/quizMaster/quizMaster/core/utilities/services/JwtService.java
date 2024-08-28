@@ -8,7 +8,7 @@ import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
-import quizMaster.quizMaster.entities.dtos.UserResponseDto;
+import quizMaster.quizMaster.entities.dtos.Response.UserResponseDto;
 
 import java.security.Key;
 import java.util.Date;

@@ -14,9 +14,8 @@ import quizMaster.quizMaster.core.utilities.results.Result;
 import quizMaster.quizMaster.core.utilities.services.JwtService;
 import quizMaster.quizMaster.dataAccess.abstracts.AdminUserDao;
 import quizMaster.quizMaster.entities.concretes.AdminUser;
-import quizMaster.quizMaster.entities.dtos.UserResponseDto;
-
-import java.util.Optional;
+import quizMaster.quizMaster.entities.dtos.Request.AdminUserCreateRequestDto;
+import quizMaster.quizMaster.entities.dtos.Response.UserResponseDto;
 
 @Service
 @RequiredArgsConstructor
@@ -30,11 +29,15 @@ public class AdminUserManager implements AdminUserService {
     private JwtService jwtService;
     private PasswordEncoderConfig passwordEncoderConfig;
     @Override
-    public Result createAdmin(@Valid @RequestBody AdminUser user) {
-            user.setPassword(passwordEncoderConfig.passwordEncoder().encode(user.getPassword()));
-            user.setRole(Roles.ADMIN);
-            this.adminUserDao.save(user);
-            return new Result(true,200);
+    public Result createAdmin(@Valid @RequestBody AdminUserCreateRequestDto user) {
+        AdminUser createUser = new AdminUser();
+        user.setPassword(passwordEncoderConfig.passwordEncoder().encode(user.getPassword()));
+        createUser.setUserName(user.getUserName());
+        createUser.setEmail(user.getEmail());
+        createUser.setPassword(user.getPassword());
+        createUser.setRole(Roles.ADMIN);
+        this.adminUserDao.save(createUser);
+        return new Result(true,200);
     }
 
 

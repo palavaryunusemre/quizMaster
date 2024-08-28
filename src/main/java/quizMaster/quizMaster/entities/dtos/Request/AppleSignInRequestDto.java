@@ -1,4 +1,4 @@
-package quizMaster.quizMaster.entities.dtos;
+package quizMaster.quizMaster.entities.dtos.Request;
 
 import lombok.*;
 

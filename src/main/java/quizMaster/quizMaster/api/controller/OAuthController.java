@@ -1,18 +1,11 @@
 package quizMaster.quizMaster.api.controller;
 
-import com.nimbusds.jose.JOSEException;
-import com.nimbusds.jose.crypto.RSASSAVerifier;
-import com.nimbusds.jose.jwk.JWK;
-import com.nimbusds.jose.jwk.JWKSet;
-import com.nimbusds.jwt.JWTClaimsSet;
-import com.nimbusds.jwt.SignedJWT;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
-import quizMaster.quizMaster.business.abstracts.AppleUserService;
 import quizMaster.quizMaster.business.abstracts.FacebookUserService;
 import quizMaster.quizMaster.business.abstracts.GoogleUserService;
 import quizMaster.quizMaster.core.utilities.results.DataResult;
@@ -23,17 +16,12 @@ import com.google.api.client.json.jackson2.JacksonFactory;
 import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import quizMaster.quizMaster.entities.dtos.AppleSignInRequestDto;
-import quizMaster.quizMaster.entities.dtos.FacebookSignInRequestDto;
-import quizMaster.quizMaster.entities.dtos.GoogleSignInRequestDto;
+import quizMaster.quizMaster.entities.dtos.Request.FacebookSignInRequestDto;
+import quizMaster.quizMaster.entities.dtos.Request.GoogleSignInRequestDto;
 
-import javax.swing.plaf.synth.Region;
 import java.io.IOException;
-import java.net.URL;
 import java.security.GeneralSecurityException;
-import java.text.ParseException;
 import java.util.Collections;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 

@@ -1,4 +1,4 @@
-package quizMaster.quizMaster.entities.dtos;
+package quizMaster.quizMaster.entities.dtos.Response;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -5,16 +5,20 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import quizMaster.quizMaster.core.utilities.services.ChatGPTService;
+import quizMaster.quizMaster.business.concretes.QuestionManager;
+import quizMaster.quizMaster.core.utilities.results.Result;
+import quizMaster.quizMaster.entities.dtos.Request.ChatGPTRequestDto;
 
 @RestController
 @RequestMapping("api/chat")
 public class ChatGPTController {
     @Autowired
-    private ChatGPTService chatGPTService;
+    private QuestionManager questionManager;
 
     @PostMapping("/ask")
-    public String askChatGPT(@RequestBody String userInput) {
-        return chatGPTService.getChatResponse(userInput);
+    public Result askChatGPT(@RequestBody ChatGPTRequestDto chatGPTRequestDto) {
+        String roomId = chatGPTRequestDto.getRoomId();
+        int questionCount = chatGPTRequestDto.getQuestionCount();
+        return questionManager.createQuestion(roomId, questionCount);
     }
 }
