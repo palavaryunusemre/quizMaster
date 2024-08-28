@@ -14,6 +14,9 @@ Bu projede android ios ve web ortamlarında geliştirilecek olan uygulamaların 
 * Facebook ile oturum açma
 * Apple ile oturum açma
 
+#### Chat GPT Entegrasyonu
+* Proje kapsamında oluşturulacak sorular Chat GPT api'si aracılığıyla oluşturulmaktadır.
+
 
 ## Bilgisayarınızda Çalıştırın
 
