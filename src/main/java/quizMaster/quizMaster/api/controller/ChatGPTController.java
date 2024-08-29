@@ -21,4 +21,8 @@ public class ChatGPTController {
         int questionCount = chatGPTRequestDto.getQuestionCount();
         return questionManager.createQuestion(roomId, questionCount);
     }
+    @PostMapping("/createQuestion")
+    public Result createQuestion(@RequestBody ChatGPTRequestDto chatGPTRequestDto) {
+        return questionManager.userCreateQuestion(chatGPTRequestDto);
+    }
 }

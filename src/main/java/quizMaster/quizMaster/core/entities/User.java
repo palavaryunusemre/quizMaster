@@ -47,12 +47,11 @@ public class User implements UserDetails {
 
     @CreationTimestamp
     @Column(name = "updated_at")
-    private Date updateAt;
+    private Date updatedAt;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "role")
     private Roles role;
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(role.name()));
