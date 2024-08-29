@@ -16,6 +16,10 @@ Bu projede android ios ve web ortamlarında geliştirilecek olan uygulamaların 
 
 #### Chat GPT Entegrasyonu
 * Proje kapsamında oluşturulacak sorular Chat GPT api'si aracılığıyla oluşturulmaktadır.
+* Kullanıcıların kendi sorularını hazırlaması imkanlarıda vardır. Hazırladıkları sorular chat GPT ile kontrol edilmektedir.
+
+#### Oda Kurma
+* Kullancılar kendi odalarını kurup kendi yarışmalarını düzenleyebilirler.
 
 
 ## Bilgisayarınızda Çalıştırın
